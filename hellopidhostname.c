@@ -11,7 +11,7 @@
 
 #define SEPARATOR  "<separator>"
 
-int main() 
+int main(int argc, char **argv) 
 {
  int pid;
  char hostname[1024];
@@ -23,11 +23,13 @@ int main()
  hostname[1023] = '\0';
  gethostname(hostname, 1023);
 
- printf("HOSTNAME= %s",hostname);
+ printf("host_name= %s",hostname);
  printf("\n");
- printf("PID= %d", pid);
+ printf(" prog_name= %s", argv[0]);
  printf("\n");
- printf("RESULT: Hello, ... I have been launched by the attlauncher\n");
+ printf(" pid= %d", pid);
+ printf("\n");
+ printf(" result= Hello, ...I've  been launched by the attlauncher\n");
  return 0;
 }
 
