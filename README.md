@@ -4,7 +4,7 @@ is shown in the figure.
 
 <p align="center">
   <img src="./figures/attestablelauncherwithatts.png" 
-   width="300" title="Attestable launcher with three attestables.">
+   width="500" title="Attestable launcher with three attestables.">
 </p>
 </br>
 
