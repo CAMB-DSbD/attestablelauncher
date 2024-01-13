@@ -11,8 +11,8 @@ is shown in the figure.
 
 Bob's attestable launcher is a server that Bob can run to
 launch attestable on a Morello Board and load them with
-code (prog~1~, prog~2~, prog~3~) as requested
-by applications (app~1~, app~2~ and app<sub>3<sub/>).
+code (prog<sub>1</sub>, prog<sub>2</sub>, prog<sub>3</sub>) as requested
+by applications (app<sub>1</sub>, app<sub>2</sub> and app<sub>3<sub/>).
 <br/>
 The attestable launcher responds with an attestation that
 describes the configuration of the launched attestable.
@@ -30,8 +30,8 @@ infrastructure to rent as a cloud service.
 <br/>
 
 In the current implementation Bob's attestable launcher and
-the attestables (att~1~, att~2~ and att~3~) that the
-applications (app~1~, app~2~ and app~3~) have
+the attestables (att<sub>1</sub>, att<sub>2</sub> and att<sub>3<sub/>) that the
+applications (app<sub>1</sub>, app<sub>2</sub> and app<sub>3<sub/>) have
 requested, respectively, are collocated. However, this is
 only to simplify the current implementation. Bob's
 attestable launcher just a coventional server that
