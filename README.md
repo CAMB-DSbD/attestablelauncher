@@ -12,7 +12,7 @@ is shown in the figure.
 Bob's attestable launcher is a server that Bob can run to
 launch attestable on a Morello Board and load them with
 code (prog~1~, prog~2~, prog~3~) as requested
-by applications (app~1~, app~2~ and app~3~).
+by applications (app~1~, app~2~ and app<sub>3<sub/>).
 <br/>
 The attestable launcher responds with an attestation that
 describes the configuration of the launched attestable.
