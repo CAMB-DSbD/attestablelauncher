@@ -10,7 +10,7 @@ is shown in the figure.
 
 
 Bob's attestable launcher is a server that Bob can run to
-launch attestable on a Morello Boardi and load them with
+launch attestable on a Morello Board and load them with
 code (prog~1~, prog~2~, prog~3~) as requested
 by applications (app~1~, app~2~ and app~3~).
 <br/>
@@ -44,6 +44,10 @@ attestables, therefore it can be deployed anywhere.
 
  
 # Compilation and execution
+The current implementation has been coded in Python3
+with prog written in C using the library compartmentalization
+facilities available from cheriBSD ver 22.12
+<br/>
 The headings of each file includes the instructions to
 compile and execute the attestable launcher and
 indicate the platform, Python version and operating
