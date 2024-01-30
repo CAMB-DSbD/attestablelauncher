@@ -1,6 +1,9 @@
 # Clients, server and sockets
 These programs in C are conventional client-server pairs that
-communicate over sockets. 
+communicate over sockets. I copied, pasted and edited (added
+a few lines) the code. The original sources are acknowledged by
+the comment lines at the beginning of each program.
+  
 </br>
 
 I use these servers and clients to test the attestables:
