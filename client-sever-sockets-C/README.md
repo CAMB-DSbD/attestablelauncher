@@ -1,4 +1,4 @@
-# Clients, server and sockets
+# Clients, servers and sockets
 These programs in C are conventional client-server pairs that
 communicate over sockets. I copied, pasted and edited (added
 a few lines) the code. The original sources are acknowledged by
