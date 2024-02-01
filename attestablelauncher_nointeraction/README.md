@@ -13,8 +13,16 @@ upon request from a client:
 
 1. Sings the results with a private key.
 
-1. Sends the results and  signature to the clients for
-   vrification.
+1. Sends the results and  signature to the client for
+   verification.
+
+1. The client retrieves verifies the validity of the
+   the server's certificate.
+
+1. The client retrieves the server's public key from
+   the server's certificate and verifies that neither
+   the signature or the results sennt by the server
+   have been altered in transit.
 
 
 __attestablelauncher_nointeract.py__ is implemented as a server that 
@@ -30,8 +38,10 @@ into execution, for example, __hellopidhostname__ or __hello__.
 ## Secure SSL-channel
 attestablelauncher_nointeract.py  and __cliRqExecProgInAtt_nointeract.py__
 interact over a secure channel built with the SSL protocol.
-The client is expected to have the certificate of the server
-from where it extracts the server's public key.
+The client is expected to have the certificate (see __bobServer.cert.pem__) 
+of the server from where it extracts the server's public key.
+The creation of the secure channel expects the corresponding
+keys, certificates and keychains located in the __RESOURCE_DIRECTORY__.
 
 
 ## Hostname and port number
