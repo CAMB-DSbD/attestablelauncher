@@ -1,14 +1,16 @@
 """
 author          : Carlos Molina Jimenez
-date            : 4 Jan 2024, Computer Lab, University of Cambridge 
                 : carlos.molina@cl.cam.ac.uk
+                : Computer Lab, University of Cambridge
+date            : 5 Feb 2024 
                 :
-title           : cliRqExecInAttestable.py 
+title           : cliRqExecProgInAttestable.py 
+                :
 description     : A client that that communicates with a server over
                 : a secure channel to request the execution of a program. 
                 : 
                 : a) This client provides the name of the program
-                :    to execute (eg hello).
+                :    to execute (eg hellopidhostname, hello, ser).
                 : b) The server is expected to know where the program to 
                 :    execute is located, for example, collocated with the
                 :    server in the same directory.
@@ -51,13 +53,22 @@ description     : A client that that communicates with a server over
                 :      attestablelauncher and
                 :  b) The results have not been altered in transit.
                 : 
+                : The results are either:
+                : 
+                : a) The results produced by the launched program
+                :    upon completion.
+                : b) The contact details (hostname, pid, port number, etc.)
+                :    of the program, which can be used by remote clients to
+                :    interact with the launched program running in  the
+                :    attestable.
+                :
 source          : Some inspiration from
                 : https://w3.ual.es/~vruiz/Docencia/Apuntes/
                 : Programming/Socket_Programming/index.html
                 : I created the self-signed certificates and ssl
                 : context following the steps
                 : https://github.com/mikepound/tls-exercises
-version         : 1.0
+version         : 5 Feb 2024 
 usage           :
 notes           :
 compile and run : 
@@ -66,15 +77,34 @@ compile and run :
                 :
                 : b)
                 : $ python3 cliRqExecProgInAttestable.py 
-                : Enter PEM pass phrase: camb
+                : Alice's client running. My PEM pass phrase is camb 
                 :
-                : It has been tested on Mac BookAir Catalina macOS 10.15.7 with
-                : Python 3.7.4 (v3.7.4:e09359112e, Jul  8 2019, 14:36:03)
-                : and cryptography 41.0.3
-                : I created the keys and certificates with
-                : OpenSSL 3.2.0 23 Nov 2023 (Library: OpenSSL 3.2.0 23 Nov 2023)
-                : The PEM pass phrase is:  camb
+                : Enter PEM pass phrase:
+                : I'm ('127.0.0.1', 60464)
                 :
+                : Type program's name to execute [default is hellopidhostname]: ser
+                : msgsize=  398
+                : payload: 
+                : attestable_details:<SEPARA>progname=./ser<SEPARA>hotsname=MacBook-
+                : Air-423.local<SEPARA>pid_num=16925<SEPARA>port_num=60469
+                :
+                : An instance of Verifycert has been created
+                : ...
+                : cert is valid: in date
+                : The sender's certificate is valid...   ... ...
+                : An instance of Verifysignatureonpayload has been created
+                :
+                : Signers pubkey extracted from signers cert and converted to python object
+                :
+                :  signature on message payload verified successfully...
+                :
+                : c) In this example, the program that this client requested to
+                :    be executed is a server (ser) which is still running within
+                :    an attestable and has returned its contact
+                :    details to be contacted by remote clients. For
+                :    example by 
+                :    % cc -o cli clisocksndrcv_ser_port_assigned_argv.c
+                :    % cli 127.0.0.1 60469
                 :
 """
 
@@ -82,7 +112,6 @@ compile and run :
 from sendReceiveOverSocket import mysend, myreceive, padmsgsize 
 from  verifysignatureonpayload import Verifysignatureonpayload 
 from  certverify import Certverify
-
 
 
 import socket 
@@ -96,7 +125,7 @@ SERVER_NAME = "localhost"
 SEVER_PORT= 9999
 
 
-RESOURCE_DIRECTORY = Path(__file__).resolve().parent / 'certskeys' / 'client'
+RESOURCE_DIRECTORY = Path(__file__).resolve().parent.parent / 'certskeys' / 'client'
 CLIENT_CERT_CHAIN = RESOURCE_DIRECTORY / 'aliceClient.intermediate.chain.pem'
 CLIENT_KEY = RESOURCE_DIRECTORY / 'aliceClient.key.pem'
 CA_CERT = RESOURCE_DIRECTORY / 'rootca.cert.pem'

@@ -1,0 +1,150 @@
+
+
+5 Feb 2024
+Step by step to execute the atttestablalauncher.py
+
+
+1)
+
+bash-3.2$ pwd
+/Users/carlosmolina/code/python/attestablelauncher
+bash-3.2$ 
+bash-3.2$ py attestablelauncher.py
+An instance of Signmessage has been created
+
+
+Bob's server running... Its PEM pass phrase is: camb
+
+Enter PEM pass phrase:
+
+ context loaded 
+
+serverwiththread waiting for clients
+
+
+
+2)
+
+bash-3.2$ cc -o ser sersocksndrcv_ser_port_assigned_argv.c
+
+
+
+bash-3.2$ pwd
+/Users/carlosmolina/code/python/attestablelauncher
+bash-3.2$ py cliRqExecProgInAttestable.py
+
+ Alice's client running. My PEM pass phrase is camb 
+
+Enter PEM pass phrase:
+I'm ('127.0.0.1', 52658)
+
+
+ Type program's name to execute [default is hellopidhostname]: ser
+
+
+
+
+3) 
+bash-3.2$ pwd
+/Users/carlosmolina/code/python/attestablelauncher
+bash-3.2$ 
+bash-3.2$ cc -o cli clisocksndrcv_ser_port_assigned_argv.c
+bash-3.2$ 
+bash-3.2$ cli 127.0.0.1 52659
+The serverhostname is : 127.0.0.1
+Connected
+
+Reply received from server: 
+Hello Client , Ive received your connection. But I have to go now, bye
+
+bash-3.2$ 
+
+
+
+4) ctrl-C to  server
+bash-3.2$ py attestablelauncher.py
+An instance of Signmessage has been created
+
+
+Bob's server running... Its PEM pass phrase is: camb
+
+Enter PEM pass phrase:
+
+ context loaded 
+
+serverwiththread waiting for clients
+serverwiththread has accepted connection!
+clisock wrapped with ssl security protection!
+ClientHandler initiated ...
+
+ ClientHandler is running ...
+
+msgsize=  5
+msg received:  b'./ser'
+attestable listening at port:  52659
+
+^CTraceback (most recent call last):
+  File "attestablelauncher.py", line 175, in <module>
+output from mysubproc: 
+b'52659\n'
+An instance of Signmessage has been created
+    clisock , sslclisocaddr= soc.accept() 
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/socket.py", line 212, in accept
+
+    fd, addr = self._accept()
+KeyboardInterrupt
+bash-3.2$ 
+
+
+
+
+
+
+5)   /* client receives the results, including the port number */
+bash-3.2$ pwd
+/Users/carlosmolina/code/python/attestablelauncher
+bash-3.2$ py cliRqExecProgInAttestable.py
+
+ Alice's client running. My PEM pass phrase is camb 
+
+Enter PEM pass phrase:
+I'm ('127.0.0.1', 52658)
+
+
+ Type program's name to execute [default is hellopidhostname]: ser
+msgsize=  281
+
+payload: 
+ 52659
+
+An instance of Verifycert has been created
+
+first valid date:  2023-09-03
+last  valid date:  2024-09-12
+today:             2024-02-02
+cert is valid: in date
+
+
+The sender's certificate is valid...   ... ...
+
+ An instance of Verifysignatureonpayload has been created
+
+Signers pubkey extracted from signers cert and converted to python object
+
+ signature on message payload verified successfully...
+bash-3.2$ 
+
+
+
+6) /* The ser (launched prog)  is kill to when 
+    * the attestablelauncher is killed
+    */
+
+bash-3.2$ cli 127.0.0.1 52659
+The serverhostname is : 127.0.0.1
+connect error
+bash-3.2$ 
+
+
+
+

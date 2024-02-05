@@ -1,13 +1,22 @@
 """
 author          : Carlos Molina Jimenez
-date            : 4 Jan 2024 
                 : carlos.molina@cl.cam.ac.uk
+                : Computer Lab, University of Cambridge
+date            : 5 Feb 2024 
                 :
 title           : attestablelauncher.py 
-description     : An attestable launcher that, 
+                :
+description     : An attestable launcher that: 
                 : 1) Is capable of receiving a request from a
-                : remote client to launch the execution of a 
-                : 2) Collects the results.
+                : remote client to launch the execution of a program within
+                : an attestable.
+                : 2) Collects the results which can be either
+                :    a) The results produced by the launched program
+                :       upon completion.
+                :    b) The contact details (hostname, pid, port number, etc.)
+                :       of the program, which can be used by remote clients to
+                :       interact with the launched program running in  the
+                :       attestable.
                 : 3) Sing the results under its private key.
                 :
                 : Notice that the key is hardcoded and is 
@@ -41,7 +50,7 @@ source          : Some inspiration from
                 : I created the self-signed certificates and ssl 
                 : context following the steps
                 : https://github.com/mikepound/tls-exercises
-version         : 1.0
+version         : 5 Feb 2024 
 usage           :
 notes           :
                 : It has been tested on Mac BookAir Catalina macOS 10.15.7 with
@@ -79,7 +88,7 @@ LOCAL_PORT= 9999
 NUM_CHAR= 8
 
 
-RESOURCE_DIRECTORY = Path(__file__).resolve().parent / 'certskeys' / 'server'
+RESOURCE_DIRECTORY = Path(__file__).resolve().parent.parent / 'certskeys' / 'server'
 SERVER_CERT_CHAIN = RESOURCE_DIRECTORY / 'bobServer.intermediate.chain.pem'
 SERVER_KEY = RESOURCE_DIRECTORY / 'bobServer.key.pem'
 
@@ -113,7 +122,6 @@ class ClientHandler(threading.Thread):
      print(" ClientHandler is running ...\n")
 
      self.msgsize= int(self.sslclisoc.recv(BUFF_OF_EIGHT).decode())
-     print("msgsize= ", self.msgsize)
 
      msg= myreceive(self.sslclisoc, self.msgsize)
         
@@ -127,15 +135,16 @@ class ClientHandler(threading.Thread):
      #mysubproc= Popen([prog], stdout=PIPE, stderr=PIPE)
      #mysubproc= Popen(["./hello"], stdout=PIPE, stderr=PIPE)
      mysubproc= Popen(["env", "LD_C18N_LIBRARY_PATH=.", prog], stdout=PIPE, stderr=PIPE)
-     list_stdout_stderr= mysubproc.communicate()
 
-     output=list_stdout_stderr[0]
-     err=   list_stdout_stderr[1]
+     output= mysubproc.stdout.readline()
+
+     err=   mysubproc.stderr 
 
      if len(output) > 0:
-        print("output from mysubproc: ")
-        print(output)
+        print("attestable contact details: ")
+        print(output.decode())
         payload= output # 4Jan 2024(carlos): Improve this code to handle the error.
+
      else:
         print("\n err from mysubproc: ")
         print(err)
