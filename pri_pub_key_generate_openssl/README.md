@@ -9,11 +9,6 @@ It uses the online openssl tool executed from a C program that:
     encoded in __pem__ format.
 </br>
 
-## Password phrase argument in command line
-A particularity of the C implementation and testing of the
-private/public keys is
-that the password phrase argument (__pass:password__) is included 
-in the command line. 
 
 
 Examples of key generation, encryption and decription with
@@ -32,6 +27,13 @@ example:
 - [How to convert a certificate to the correct format, Patrick Nohe](https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/).
 
 - [Converting OpenSSH public keys, Lars Kellogg-Stedman](https://blog.oddbit.com/post/2011-05-08-converting-openssh-public-keys/).
+
+
+## Password phrase argument in command line
+A particularity of the C implementation and testing of the
+private/public keys is
+that the password phrase argument (__pass:password__) is included 
+in the command line. 
 
 
 ## Attestable's public key
@@ -55,5 +57,6 @@ Additional documentation is included in the first lines of  __generate_pripubkey
 ## Corresponding author  
 carlos.molina@cl.cam.ac.uk
 
+Computer Laboratory, University of Cambridge.
  
  
