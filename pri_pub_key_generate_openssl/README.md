@@ -10,7 +10,9 @@ It uses the online openssl tool executed from a C program that:
 </br>
 
 Examples of key generation, encryption and decription with
-the openssl tool can be found in [Encrypting and decrypting files with OpenSSL, Gaurav Kamathe](https://opensource.com/article/21/4/encryption-decryption-openssl)
+the openssl tool can be found in 
+
+1. [Encrypting and decrypting files with OpenSSL, Gaurav Kamathe](https://opensource.com/article/21/4/encryption-decryption-openssl).
 
 </br>
 
@@ -18,8 +20,11 @@ The PEM (Privacy Enhanced Mail) is a encoding stardard for
 encoding binary data using only printable ASCII characters.
 Keys (and arbitrary binary data) encoded in PEM can be
 transmitted over communication channels. See for
-example [How to convert a certificate to the correct format, Patrick Nohe](https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/)
-and [Converting OpenSSH public keys, Lars Kellogg-Stedman](https://blog.oddbit.com/post/2011-05-08-converting-openssh-public-keys/).
+example:
+
+1. [How to convert a certificate to the correct format, Patrick Nohe](https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/).
+
+1. [Converting OpenSSH public keys, Lars Kellogg-Stedman](https://blog.oddbit.com/post/2011-05-08-converting-openssh-public-keys/).
 
 
 ## Attestable's public key
