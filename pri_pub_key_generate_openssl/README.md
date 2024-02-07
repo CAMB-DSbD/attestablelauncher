@@ -18,7 +18,8 @@ The PEM (Privacy Enhanced Mail) is a encoding stardard for
 encoding binary data using only printable ASCII characters.
 Keys (and arbitrary binary data) encoded in PEM can be
 transmitted over communication channels. See for
-example [How to convert a certificate to the correct format, Patrick Nohe](https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/).
+example [How to convert a certificate to the correct format, Patrick Nohe](https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/)
+and [Converting OpenSSH public keys, Lars Kellogg-Stedman](https://blog.oddbit.com/post/2011-05-08-converting-openssh-public-keys/).
 
 
 ## Attestable's public key
