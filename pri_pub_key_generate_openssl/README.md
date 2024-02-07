@@ -6,9 +6,16 @@ It uses the online openssl tool executed from a C program that:
 1. Creates to child processes with __fork( )__
 1. Each child process executes __execl(openssl...)__  to  generate,
     respectively, the private and public key, and store them on disk
-    in __pem__ format.
+    encoded in __pem__ format.
 </br>
 
+The PEM (Privacy Enhanced Mail) is a encoding stardard for
+encoding binary data using only printable ASCII characters.
+Keys (and arbitrary binary data) encoded in PEM can be
+transmitted over communication channels. See for
+example [How to convert a certificate to the correct format]
+(https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/)
+and ..
 
 ## Attestable's public key
 The code can be used for generating the pub key that an
