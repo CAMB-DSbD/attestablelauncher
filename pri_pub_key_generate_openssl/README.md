@@ -9,11 +9,16 @@ It uses the online openssl tool executed from a C program that:
     encoded in __pem__ format.
 </br>
 
+Examples of key generation, encryption and decription with
+the openssl tool can be found in [Encrypting and decrypting files with OpenSSL, Gaurav Kamathe](https://opensource.com/article/21/4/encryption-decryption-openssl)
+
+</br>
+
 The PEM (Privacy Enhanced Mail) is a encoding stardard for
 encoding binary data using only printable ASCII characters.
 Keys (and arbitrary binary data) encoded in PEM can be
 transmitted over communication channels. See for
-example [How to convert a certificate to the correct format](https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/).
+example [How to convert a certificate to the correct format, Patrick Nohe](https://www.thesslstore.com/blog/how-to-convert-a-certificate-to-the-correct-format/).
 
 
 ## Attestable's public key
