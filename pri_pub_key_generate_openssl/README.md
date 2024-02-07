@@ -1,6 +1,12 @@
 # Generation of pri-pub key pair with openssl online tool
-This code shows a pragmatic approach to generate a pair of private-public keys
-using the online openssl tool.
+This code shows a pragmatic approach to generate a pair of private-public keys.
+It uses the online openssl tool executed from a C program that:
+</br. 
+
+1. Creates to child processes with __fork( )__
+1. Each child process executes __execl(openssl...)  to  generate,
+    respectively, the private and public key, and store them on disk
+    in __pem__ format.
 </br>
 
 
