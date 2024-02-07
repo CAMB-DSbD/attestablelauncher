@@ -56,7 +56,6 @@ Additional documentation is included in the first lines of  __generate_pripubkey
    
 ## Corresponding author  
 carlos.molina@cl.cam.ac.uk
-
 Computer Laboratory, University of Cambridge.
  
  
