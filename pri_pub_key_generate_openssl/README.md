@@ -9,8 +9,15 @@ It uses the online openssl tool executed from a C program that:
     encoded in __pem__ format.
 </br>
 
+## Password phrase argument in command line
+A particularity of the C implementation and testing of the
+private/public keys is
+that the password phrase argument (__pass:password__) is included 
+in the command line. 
+
+
 Examples of key generation, encryption and decription with
-the openssl tool can be found in 
+the openssl tool can be found in: 
 
 - [Encrypting and decrypting files with OpenSSL, Gaurav Kamathe](https://opensource.com/article/21/4/encryption-decryption-openssl).
 
