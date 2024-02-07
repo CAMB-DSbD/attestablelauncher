@@ -19,7 +19,7 @@ applications willing to interact with the attestable.
      
  
 # Documentation 
-Additional documentation is included in the first lines of  __generate_pripubkey_withpass.c 
+Additional documentation is included in the first lines of  __generate_pripubkey_withpass.c__ 
 
    
 ## Corresponding author  
