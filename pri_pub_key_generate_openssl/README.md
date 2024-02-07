@@ -4,7 +4,7 @@ It uses the online openssl tool executed from a C program that:
 </br> 
 
 1. Creates to child processes with __fork( )__
-1. Each child process executes __execl(openssl...)  to  generate,
+1. Each child process executes __execl(openssl...)__  to  generate,
     respectively, the private and public key, and store them on disk
     in __pem__ format.
 </br>
