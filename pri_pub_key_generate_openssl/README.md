@@ -14,7 +14,7 @@ applications willing to interact with the attestable.
 
 1. Encrypt messages sent to the attestable and
 
-1. Run the Diffie?Hellman algorithm with the attestable to agree on
+1. Run the Diffie-Hellman algorithm with the attestable to agree on
     a secret key.
      
  
