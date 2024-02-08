@@ -2,7 +2,7 @@
  * generate_pripubkey_withpass.c
  *
  * Programmer: Carlos.Molina@cl.cam.ac.uk
- * Date:       6 Feb 2024, Computer Lab, Univ of Cambridge
+ * Date:       8 Feb 2024, Computer Lab, Univ of Cambridge
  *
  * This program shows how to use fork, execl and openssl 
  * to create a pair of private and public keys. 
@@ -11,13 +11,23 @@
  *
  * 1) The parent process forks to create a child that
  *    executes execl(openssl ...) to create a private key.
+ *
  * 2) The parent process waits for the child to
  *    to complete producing privkey.pem on disk.
+ *
  * 3) The parent process forks to create a child that
  *    executes execl(openssl ...) to create a pub key.
- * 3) the parent process waits for the child process
+ *
+ * 4) The parent process waits for the child process
  *    to complete producing pubkey.pem on disk. 
- * 5) The parent process continues its execution. 
+ *
+ * 5) The parent process continues its execution and
+ *    calls the functin char *read_key_from_file(char *key_fname)
+ *    to read the public key from the generated pubkey.pem file,
+ *    places it in an array of chars (i.e, a string) and
+ *    prints it out.
+ *    The public key can be sent over a communication channel
+ *    like a socket to a remote application.
  *
  * Source:
  * I copied the openssl commands executed by execl from
@@ -30,8 +40,12 @@
  * a-shell-built-in-command-with-a-c-function
  *
  * compilation:
- * bash-3.2$ cc -o genpripubkey generate_pripubkey_withpass.c
+ * The compilation assumes that readfiletostring_func.c
+ * in located in the current subdir 
  *
+ * bash-3.2$ cc -o genpripubkey generate_pripubkey_withpass.c
+ *           
+ *        
  * execution:
  * bash-3.2$ genpripubkey
  *
@@ -66,11 +80,18 @@
 #include <stdlib.h>     /* needed to define exit()    */
 #include <unistd.h>     /* needed to define getpid()  */
 
+#include "readfiletostring_func.c" /* place it in the current sundir */
+
+char *read_key_from_file(char *key_fname); 
+
+
 int main(int argc, char **argv) 
 {
  int chpid_prikey;  /* child pid that creates private key */
  int chpid_pubkey;  /* child pid that created public key  */
  
+ char *pub_key;
+
 printf("\n I'm the parent proc: I will create a pri-pub key pair.\n");
 if ((chpid_prikey=fork()) == -1)
    {
@@ -114,6 +135,8 @@ else
     /* parent */
     while(wait(NULL) >0)
     printf("\n I'm the parent proc: chpid_pubkey child has terminated\n");
+    pub_key= read_key_from_file("pubkey.pem"); /* pub_key can be sent over a socket */
+    printf("pub_key : %s\n", pub_key);         /* to remote parties                 */
     }
  }
 }
