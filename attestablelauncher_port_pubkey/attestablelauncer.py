@@ -13,11 +13,11 @@ description     : An attestable launcher that:
                 : 2) Collects the results which can be either
                 :    a) The results produced by the launched program
                 :       upon completion.
-                :    b) The contact details (hostname, pid, port number, etc.)
+                :    b) The contact details (hostname, pid, port number, and public key),
                 :       of the program, which can be used by remote clients to
                 :       interact with the launched program running in  the
                 :       attestable.
-                : 3) Sing the results under its private key.
+                : 3) Sign the results under its private key.
                 :
                 : Notice that the key is hardcoded and is 
                 : "bobServer.key.pem"
@@ -72,6 +72,7 @@ compile and run :
 # A concurrent TCP server 
 
 from sendReceiveOverSocket import mysend, myreceive, padmsgsize 
+from clean_attestable_output import replace_tabs_by_newlines
 from pathlib import Path
 from subprocess import Popen, PIPE 
 
@@ -136,18 +137,16 @@ class ClientHandler(threading.Thread):
      #mysubproc= Popen(["./hello"], stdout=PIPE, stderr=PIPE)
      mysubproc= Popen(["env", "LD_C18N_LIBRARY_PATH=.", prog], stdout=PIPE, stderr=PIPE)
 
-     #for x in range(9):
-     output_rcv= mysubproc.stdout.readline()
-
-     s= output_rcv.decode()
-     s_split= s.partition("pub_key=")
-     att_details=       s_split[0]
-     pub_key_mark=      s_split[1]
-     pubkeywithtabs=    s_split[2]
-     pubkeywithnewlines= pubkeywithtabs.replace("\t", "\n")
-     output_str= att_details + pub_key_mark + pubkeywithnewlines
-     output= output_str.encode() 
      
+     """
+     readline is able to read a single line, i.e, a string without newline
+     chars (\n). The string includes a public key in which newline chars have
+     been replaced by tabs (\t) at the source. replace_tabs_by newlines
+     restores the newline chars back to the public key.
+     """
+     output_rcv= mysubproc.stdout.readline() 
+     output= replace_tabs_by_newlines(output_rcv)
+ 
      err=   mysubproc.stderr 
 
      if len(output) > 0:
