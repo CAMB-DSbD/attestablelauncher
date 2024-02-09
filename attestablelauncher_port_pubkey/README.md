@@ -2,6 +2,9 @@
 The architecture of the attestable launcher that this code implements
 is shown in the figure.
 
+In this version the launched program included a public key in ist
+contactdetails...
+
 <p align="center">
   <img src="./figures/attestablelauncherwithatts.png" 
    width="500" title="Attestable launcher with three attestables.">
