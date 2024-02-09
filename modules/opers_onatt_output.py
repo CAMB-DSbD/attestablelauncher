@@ -1,16 +1,16 @@
 """"
-Program     : clean_attestable_output.py
+Program     : opers_onatt_output.py
             :
 Programmer  : Carlos Molina Jimenez
 Date        : 9 Jan 2024, Computer Lab, Univ of Cambridge
             :
-Description : These functions are used forpre- processing the output
+Description : These functions are used for pre-processing the output
             : sent by the program launched in the attestable, to the
             : attestable launcher. 
             :
 compile and : 
 run         :  
-            : python3 clean_attestable_output.py
+            : python3 opers_onatt_output.py
             :
             : 
             : It uses python  cryptography 41.0.3
@@ -44,6 +44,20 @@ def  replace_tabs_by_newlines(str_with_tabs):
      return str_with_newlines.encode()
 
 
+"""
+str_with_key includes the public key marked by
+sometext...moretextpub_key=charsofpublickey
+partition separated the string into three substrings:
+the las one str_split[2] contains the public key which
+is written on disk
+"""
+def save_pubkey_ondisk(pem_filename, str_with_key):
+    str= str_with_key.decode()
+    str_split=str.partition("pub_key=")
+    pub_key=str_split[2]
+    with open(pem_filename, "wb") as f:
+      f.write(pub_key.encode())
+      f.close()
 
 
 
