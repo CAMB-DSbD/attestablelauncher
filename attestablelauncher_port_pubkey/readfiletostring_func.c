@@ -1,6 +1,6 @@
 /* 
  * Programmer: Carlos Molina Jimenez
- * Date:       9 Feb 2024
+ * Date:       10 Feb 2024
  * Institution: Computer Laboratory, University of Cambridge
  *
  * Program:  readfiletostring_func.c
@@ -49,23 +49,45 @@
 
 char *read_key_from_file(char *key_fname)
 {
-  int  i;
-  char *key, c;
+  int  i; 
+  int  keylen;
+  char *key, *k, c;
   FILE *fp;
   char *file_to_str(char *p, FILE *fp, char *c);
+
+  
+  k= malloc(sizeof(char) * MAX_KEY_SIZE); /* allocation of mem for key*/
+  if (k==NULL){
+      printf("MALLOC ERROR: not enough memory to allocate");
+      exit(1);
+     }
+     
+  for (i=0;i<=MAX_KEY_SIZE; i++) /* fill array of char with '\0' */ 
+      k[i]='\0';         
   
   fp=fopen(key_fname,"r");
-  while (c!= EOF)
-     {
-      key = malloc(sizeof(char) * MAX_KEY_SIZE); /* allocation of mem for key*/
+  if (fp==NULL){
+      printf("FILE ERROR: file %s can't be opened\n",key_fname);
+      exit(1);
+     }
 
-      for (i=0;i<=MAX_KEY_SIZE; i++) /* fill array of char with '\0' */ 
-          key[i]='\0';         
-          file_to_str(key, fp, &c);  /* read pemfile and store key in array of char */
-     } 
+  c='\n';       /* improve: use return from file_to_str (carlos 9Feb2024) */
+  while (c!= EOF)
+    {
+      file_to_str(k, fp, &c); /* read pemfile and store key in array of char */
+    } 
+  keylen= strlen(k);
+  key= malloc(sizeof(char) * (keylen+1));
+  if (key==NULL){
+      printf("MALLOC ERROR: not enough memory to allocate");
+      exit(1);
+     }
+  strcpy(key,k); /* free unused mem of k */ 
+  free(k);
   return key;
   fclose(fp); /* close pub key pem file */
 }
+
 
 
 

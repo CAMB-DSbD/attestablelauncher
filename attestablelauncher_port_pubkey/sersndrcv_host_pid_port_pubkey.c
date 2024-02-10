@@ -3,7 +3,7 @@
  * Programmer:  Carlos Molina Jimenez
  *              Computer Lab, Univ of Cambridge
  *              carlos.molina@cl.cam.ac.uk
- * Date:        9 Feb 2024
+ * Date:        10 Feb 2024
  *
  * Source: https://www.binarytides.com/socket-programming-c-linux-tutorial/
  *
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
          strcat(att_contact_details, SEPARATOR);
          strcat(att_contact_details, "pub_key=");
          strcat(att_contact_details, pub_key); 
-         
+         free(pub_key); 
           
          /* puts(port_num_str); */
          puts(att_contact_details); 
