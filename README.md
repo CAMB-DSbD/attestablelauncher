@@ -157,13 +157,13 @@ The headings also document the cryptographic libraries, operations
 and files (public and private keys and certificates) involved.
 
 # Testing: compilation and execution steps
-This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/docs/compile_and_exec_attlauncher_demo_steps.txt"technical report")) document shows the steps to run the
+This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/docs/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
 attestable launcher. 
 
 
 # Documentation
 The discussion of the architecture that this repository implements
- is discussed thoroughly in [Cloud Provider's Based Attestation](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/CloudProvidersBasedAttestation_carlosmolina.pdf "technical report")). 
+ is discussed thoroughly in [Cloud Provider's Based Attestation](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/CloudProvidersBasedAttestation_carlosmolina.pdf "technical report"). 
 
  
 # Compilation and execution
