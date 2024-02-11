@@ -1,0 +1,224 @@
+/*
+ * Programmer: Carlos Molina Jimenez
+ *             carlos.molina@cl.cam.ac.uk
+ *             Computer Lab, University of Cambridge
+ * 
+ * Date:        9 Feb 2024
+ *
+ * Demo.txt
+ *         Explains the procedure to use the attestblelauncher
+ *         to launch the execution of a program within an
+ *         attestable. 
+ *         A program called "ser" is used in this example.
+ *         For convenience of testing, all the pieces of code are 
+ *         collocated in the localhost (127.0.0.1).  
+ *         Redefinition of hostname (LOCAL_HOST) in Python and C
+ *         code will be needed to experiment with remote interactions.
+ *
+ * Testing environment used:
+ *  macOS Catalina Version 10.15.7
+ *
+ *  bash-3.2$ python3
+ *  Python 3.7.4 (v3.7.4:e09359112e, Jul  8 2019, 14:36:03) 
+ */
+
+
+
+
+bash-3.2$ date
+Fri  9 Feb 2024 02:19:12 GMT
+
+
+
+
+bash-3.2$ pwd
+/Users/carlosmolina/code/python/attestablelauncher
+bash-3.2$ 
+
+
+
+
+1) Compile the server (ser) to be launched within the
+   attestable
+
+bash-3.2$ cc -o ser sersndrcv_host_pid_port_pubkey.c
+
+
+
+
+2) Compile the client that I use to interact remotely
+   with ser through a port number and possibly using
+   the ser's public key.
+   In this run, cli does not use ser's public key. It
+   contracts ser directly.
+bash-3.2$ cc -o cli clisndrcv_host_pid_port_pubkey.c
+
+
+
+
+3) Start the attestablelauncher
+
+bash-3.2$ python3 attestablelauncher.py
+An instance of Signmessage has been created
+
+
+Bob's server running... Its PEM pass phrase is: camb
+
+Enter PEM pass phrase:
+
+ context loaded 
+
+serverwiththread waiting for clients
+
+
+
+
+4) Start the client that contacts the attestablelauncher 
+   and requests to launch the execution of a program (ser
+   in this example) within the attestable.
+
+bash-3.2$ python3 cliRqExecProgInAttestable.py
+
+ Alice's client running. My PEM pass phrase is camb 
+
+Enter PEM pass phrase:
+I'm ('127.0.0.1', 60766)
+
+
+ Type program's name to execute [default is hellopidhostname]: ser
+msgsize=  868
+
+payload: 
+ attestable_details:<SEPARA>progname=./ser<SEPARA>hotsname=MacBook-Air-423.local<SEPARA>pid_num=63903<SEPARA>port_num=60768<SEPARA>pub_key=-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw0rTuCd+Lt+z/Ng13gSo
+ovj2Mc5WYEUUkk7Rc4QPe7YYjdd+IionPusBOjgw9g8TfBqLOZKf/4qX0GZKocK3
+EHMh0hY6UcubC2Ow+euJyC4qON5W36t0bL04mPLtzeAWy4QMcOq7fQG7wKQwGgz9
+wKamMwNfTOBbQ5wiP7BOD15KI1lGYc4YCBc4ilLQItqgS1H+V2jxSsmz9brj/R4o
+8DVR8fMNxJgg9UlLlQ70MsvzHeSsiXozZLWfz4dwWY8HIA3T+Fq5ye6pOgrImiQ/
+q5Ov+4Z995rk0+4JFr9JpUAxlJPqoBWvgZUHwFV4fvnKftnkSFUdPv8gLDkJD+5A
+/QIDAQAB
+-----END PUBLIC KEY-----
+
+
+An instance of Verifycert has been created
+
+first valid date:  2023-09-03
+last  valid date:  2024-09-12
+today:             2024-02-09
+cert is valid: in date
+
+
+The sender's certificate is valid...   ... ...
+
+ An instance of Verifysignatureonpayload has been created
+
+Signers pubkey extracted from signers cert and converted to python object
+
+ signature on message payload verified successfully...
+bash-3.2$ 
+
+
+/*
+ * Observations:
+ * 1) ser's contact details include port number and a public
+ * key. Both can be used by applications willing to
+ * interact with ser while it is running within the attestable.
+ * 2) the client that requested the launch of ser verifies
+ * a) the signature on the attestablelauncher's response placed 
+ *    by the attestable launcher using its private key.
+ * b) the validity of the attestablelauncher's certificate from
+ *    where the client extracts the attestablelauncher's public
+ *    key. 
+ */
+
+
+
+
+5)  The server (ser) is still running within the attestable
+    and listening at port number 60768
+bash-3.2$ ps
+  PID TTY           TIME CMD
+53088 ttys000    0:00.04 -bash
+53171 ttys000    0:00.24 bash
+53183 ttys001    0:00.02 -bash
+53267 ttys001    0:00.27 bash
+54243 ttys002    0:00.02 -bash
+54328 ttys002    0:00.32 bash
+63805 ttys002    0:00.34 /Library/Frameworks/Python.framework/Versions/3.7/Resources/Python.app/Contents/M
+63903 ttys002    0:00.01 ./ser  <<<----- ser running within attestable
+60387 ttys003    0:00.03 -bash
+60471 ttys003    0:00.18 bash
+60918 ttys004    0:00.02 -bash
+61002 ttys004    0:00.06 bash
+bash-3.2$ 
+
+
+
+
+6) ser can be contacted only through the correct
+   port number notifies to the attestable launcher
+   who notifies it to the client that requested the
+   execution of ser.
+
+
+6.1 Attempt to interact with ser through an incorrect 
+    port number.
+bash-3.2$ cli 127.0.0.1 6076
+The serverhostname is : 127.0.0.1
+connect error
+
+
+6.2 Attempt to interact with ser through the correct 
+    port number.
+bash-3.2$ cli 127.0.0.1 60768
+The serverhostname is : 127.0.0.1
+Connected
+
+Reply received from server: 
+Hello Client , Ive received your connection. But I have to go now, bye
+
+
+
+
+7) Stop the attestablelauncher by Crtl^C
+An instance of Signmessage has been created
+
+^CTraceback (most recent call last):
+  File "attestablelauncher.py", line 194, in <module>
+    clisock , sslclisocaddr= soc.accept() 
+  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/socket.py", line 212, in accept
+    fd, addr = self._accept()
+KeyboardInterrupt
+bash-3.2$ 
+
+
+
+
+8) The server (ser) has been killed too.
+bash-3.2$ ps
+  PID TTY           TIME CMD
+53088 ttys000    0:00.04 -bash
+53171 ttys000    0:00.24 bash
+53183 ttys001    0:00.02 -bash
+53267 ttys001    0:00.27 bash
+54243 ttys002    0:00.02 -bash
+54328 ttys002    0:00.32 bash
+60387 ttys003    0:00.03 -bash
+60471 ttys003    0:00.18 bash
+60918 ttys004    0:00.02 -bash
+61002 ttys004    0:00.06 bash
+bash-3.2$ 
+
+
+
+
+9) Attempts to connect to ser after Crtl^C againts the
+attestablelauncher fails
+
+bash-3.2$ cli 127.0.0.1 60768
+The serverhostname is : 127.0.0.1
+connect error
+
+
+
+
