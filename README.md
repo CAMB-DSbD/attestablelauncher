@@ -144,9 +144,25 @@ can launch an interactive program
 
 
 # Implementation
-The current implementation has been coded in Python3
-with prog written in C using the library compartmentalization
-facilities available from cheriBSD ver 22.12
+We refer to the last figure to explain the pieces of
+code that compose the implementation.
+
+1. The current implementation of the attestable launcher (blue box)
+   has been coded and tested in Python3 (3.7.4 v3.7.4:e09359112e, 
+   Jul  8 2019, 14:36:03). 
+1. The application (gree box) that contacts the attestable launcher with
+   a request to launch __prog__ in an attestable has been implemented
+   in C.
+1. The program __prog__ (yellow box) launched into execution has 
+   coded in C. 
+1. The actual attestable (pink box) is created in C using the library 
+   compartmentalization facilities available from cheriBSD ver 
+   22.12. 
+   </br>
+   However, observe that in this demo, the attestable IS NOT
+   created in the actual Morello Board. That part of the
+   demo is pending. 
+1. The client (green box) has been implemented in C.
 </br>
 
 The headings also document the cryptographic libraries, operations
