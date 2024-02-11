@@ -3,9 +3,9 @@
  *             carlos.molina@cl.cam.ac.uk
  *             Computer Lab, University of Cambridge
  * 
- * Date:        9 Feb 2024
+ * Date:   11 Feb 2024
  *
- * Demo.txt
+ * compile_and_exec_attlauncher_demo_steps.txt 
  *         Explains the procedure to use the attestblelauncher
  *         to launch the execution of a program within an
  *         attestable. 
