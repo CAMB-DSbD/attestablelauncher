@@ -49,7 +49,7 @@ is shown in the figure.
 
 <p align="center">
   <img src="./figures/attestablelauncherwithatts.png"
-   width="650" title="Attestable launcher with three attestables.">
+   width="700" title="Attestable launcher with three attestables.">
 </p>
 </br>
 
@@ -86,7 +86,7 @@ The following figure illustrates the attestation steps.
 
 <p align="center">
   <img src="./figures/attestablelauncherTimeline.png"
-   width="650" title="Attestable's attestation.">
+   width="700" title="Attestable's attestation.">
 </p>
 </br>
 
@@ -123,7 +123,7 @@ can launch a non-interactive program
 
 <p align="center">
   <img src="./figures/ProgSends_att_result.png"
-   width="650" title="Launching of a non-interactive program.">
+   width="700" title="Launching of a non-interactive program.">
 </p>
 </br>
 
@@ -136,7 +136,7 @@ can launch an interactive program
 
 <p align="center">
   <img src="./figures/ProgSends_att_contact_details.png"
-   width="650" title="Launching of an interactive program.">
+   width="700" title="Launching of an interactive program.">
 </p>
 </br>
 
