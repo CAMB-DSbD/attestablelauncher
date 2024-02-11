@@ -212,8 +212,9 @@ bash-3.2$
 
 
 
-9) Attempts to connect to ser after Crtl^C againts the
-attestablelauncher fails
+9) As expected, attempts to connect to ser after Crtl^C againts the
+attestablelauncher fails. This shows that the attestablelauncher remains
+in control of the attestable.
 
 bash-3.2$ cli 127.0.0.1 60768
 The serverhostname is : 127.0.0.1
