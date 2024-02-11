@@ -148,22 +148,12 @@ The current implementation has been coded in Python3
 with prog written in C using the library compartmentalization
 facilities available from cheriBSD ver 22.12
 </br>
-The headings of each file includes the instructions to
-compile and execute the attestable launcher and
-indicate the platform, Python version and operating
-systems where the code has been tested.
 
 The headings also document the cryptographic libraries, operations
 and files (public and private keys and certificates) involved.
 
-# Testing: compilation and execution steps
-This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
-attestable launcher. 
 
 
-# Documentation
-The discussion of the architecture that this repository implements
- is discussed thoroughly in [Cloud Provider's Based Attestation](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/CloudProvidersBasedAttestation_carlosmolina.pdf "technical report"). 
 
  
 # Compilation and execution
@@ -178,6 +168,16 @@ systems where the code has been tested.
 
 The headings also document the cryptographic libraries, operations 
 and files (public and private keys and certificates) involved. 
+
+# Testing: compilation and execution steps
+This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
+attestable launcher. 
+
+
+
+# Additional documentation
+The discussion of the architecture that this repository implements
+ is discussed thoroughly in [Cloud Provider's Based Attestation](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/CloudProvidersBasedAttestation_carlosmolina.pdf "technical report"). 
  
  
 # Corresponding author  
