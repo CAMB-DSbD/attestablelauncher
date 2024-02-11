@@ -157,7 +157,7 @@ The headings also document the cryptographic libraries, operations
 and files (public and private keys and certificates) involved.
 
 # Testing: compilation and execution steps
-This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
+This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/compile_and_exec_attlauncher_demo.txt "technical demo") document shows the steps to run the
 attestable launcher. 
 
 
