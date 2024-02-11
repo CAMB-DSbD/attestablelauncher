@@ -143,7 +143,7 @@ can launch an interactive program
 
 
 
-# Compilation and execution
+# Implementation
 The current implementation has been coded in Python3
 with prog written in C using the library compartmentalization
 facilities available from cheriBSD ver 22.12
@@ -156,6 +156,26 @@ systems where the code has been tested.
 The headings also document the cryptographic libraries, operations
 and files (public and private keys and certificates) involved.
 
+# Testing: compilation and execution steps
+
+
+1. Compile the server (ser) to be launched within the
+   attestable.
+
+```
+bash-3.2$ cc -o ser sersndrcv_host_pid_port_pubkey.c
+```
+
+1. Compile the client that I use to interact remotely
+   with ser through a port number and possibly using
+   the ser's public key.
+   In this run, cli does not use ser's public key. It
+   contracts ser directly.
+
+```
+bash-3.2$ cc -o cli clisndrcv_host_pid_port_pubkey.c
+
+```
 
 
 # Documentation
