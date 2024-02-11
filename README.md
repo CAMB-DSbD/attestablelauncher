@@ -162,7 +162,7 @@ attestable launcher.
 
 
 # Documentation
- The discussion of the architecture that this repository implements
+The discussion of the architecture that this repository implements
  is discussed thoroughly in [Cloud Provider's Based Attestation](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/CloudProvidersBasedAttestation_carlosmolina.pdf "technical report")). 
 
  
