@@ -144,8 +144,9 @@ can launch an interactive program
 
 
 # Implementation
-We refer to the last figure to explain the pieces of
-code that compose the implementation.
+We will refer to the last figure to explain the technology
+used for the implementation of the pieces of code that 
+compose the implementation.
 
 1. The current implementation of the attestable launcher (blue box)
    has been coded and tested in Python3 (3.7.4 v3.7.4:e09359112e, 
@@ -166,18 +167,13 @@ code that compose the implementation.
    in C.
 </br>
 
-The headings also document the cryptographic libraries, operations
-and files (public and private keys and certificates) involved.
-
-
-
 
  
-# Compilation and execution
-The current implementation has been coded in Python3
-with prog written in C using the library compartmentalization
-facilities available from cheriBSD ver 22.12
-</br>
+
+# Testing: compilation and execution steps
+This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
+attestable launcher. 
+
 The headings of each file includes the instructions to
 compile and execute the attestable launcher and
 indicate the platform, Python version and operating
@@ -185,10 +181,8 @@ systems where the code has been tested.
 
 The headings also document the cryptographic libraries, operations 
 and files (public and private keys and certificates) involved. 
-
-# Testing: compilation and execution steps
-This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
-attestable launcher. 
+We refer to the last figure to explain the pieces of
+code that compose the implementation.
 
 
 
