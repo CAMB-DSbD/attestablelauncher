@@ -1,0 +1,136 @@
+/*
+ * Programmer: Carlos Molina Jimenez
+ *             carlos.molina@cl.cam.ac.uk
+ *             Computer Lab, University of Cambridge
+ * 
+ * Date:   12 Feb 2024
+ *
+ * application_demo_steps.txt 
+ *         Explains the procedure to use the application
+ *         to request the execution of a program within an
+ *         attestble created on a Morello Board. 
+ *         A program called "ser" is used in this example.
+ *         For convenience of testing, all the pieces of code are 
+ *         collocated in the localhost (127.0.0.1).  
+ *         Redefinition of hostname (LOCAL_HOST) in Python and C
+ *         code will be needed to experiment with remote interactions.
+ *
+ * Testing environment used:
+ *  macOS Catalina Version 10.15.7
+ *
+ *  bash-3.2$ python3
+ *  Python 3.7.4 (v3.7.4:e09359112e, Jul  8 2019, 14:36:03) 
+ */
+
+
+
+
+1) This program assumes that attestablelauncher.py is running
+in the local host at accepting connection requests. The
+current versions of the attestablelauncher and cliRqExecProgInAttestable.py
+are hardcoded with:
+
+SERVER_NAME = "localhost"
+SEVER_PORT= 9999
+
+
+
+
+2) Execution of cliRqExecProgInAttestable.py against attestablelauncher.py
+   to request the execution of a program called ser.
+
+bash-3.2$ py cliRqExecProgInAttestable.py
+
+ Alice's client running. My PEM pass phrase is camb 
+
+Enter PEM pass phrase:
+I'm ('127.0.0.1', 51364)
+
+
+ Type program's name to execute [default is hellopidhostname]: ser
+msgsize=  867
+
+payload: 
+ attestable_details:<SEPARA>progname=./ser<SEPARA>hotsname=MacBook-Air-423.local<SEPARA>pid_num=6884<SEPARA>port_num=51365<SEPARA>pub_key=-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1cvqIBHkz4YBKmt15edF
+TlJrjTMR1sFmC42C28ftikFB4d7sZLq9P4lx9fIpJko+zKguMwcIS9lUVEwHjT1R
+YTUFGttgTvGgg/KYX+gsX0HTiMoXgdNwdevfzwR+Vu483Q3MGuZl02Grl46ZkEmx
+fEzKeO3Mmljpx07sXZOEQN3v2O9dXJqPDM1+efu6SxvtIzPHwir14Lyc6VeJWMSe
+stSioKNec2J9FAK9GOm8PLqb58KU6lcT0MGs2icmyue6cn01P0pdPAejeRkgB/iU
+X/+cvi9E+j+poW8bZ/t9zyQBZWZiLu7b/68/tVmvlnb4tKgxWcxq+AXegqSh3Io8
+YwIDAQAB
+-----END PUBLIC KEY-----
+
+
+An instance of Verifycert has been created
+
+first valid date:  2023-09-03
+last  valid date:  2024-09-12
+today:             2024-02-12
+cert is valid: in date
+
+
+The sender's certificate is valid...   ... ...
+
+ An instance of Verifysignatureonpayload has been created
+
+Signers pubkey extracted from signers cert and converted to python object
+
+ signature on message payload verified successfully...
+
+pub_key is on attprog_pubkey.pem
+ 
+
+
+
+3) ser's public key
+Upon completion, cliRqExecProgInAttestable.py saves ser's public
+key in the attprog_pubkey.pem file created in the current
+subdirectory
+
+bash-3.2$ cat attprog_pubkey.pem
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1cvqIBHkz4YBKmt15edF
+TlJrjTMR1sFmC42C28ftikFB4d7sZLq9P4lx9fIpJko+zKguMwcIS9lUVEwHjT1R
+YTUFGttgTvGgg/KYX+gsX0HTiMoXgdNwdevfzwR+Vu483Q3MGuZl02Grl46ZkEmx
+fEzKeO3Mmljpx07sXZOEQN3v2O9dXJqPDM1+efu6SxvtIzPHwir14Lyc6VeJWMSe
+stSioKNec2J9FAK9GOm8PLqb58KU6lcT0MGs2icmyue6cn01P0pdPAejeRkgB/iU
+X/+cvi9E+j+poW8bZ/t9zyQBZWZiLu7b/68/tVmvlnb4tKgxWcxq+AXegqSh3Io8
+YwIDAQAB
+-----END PUBLIC KEY-----
+
+
+
+4) I tested ser's public key using the online openssl tool.
+I have not tested it yet to encrypt/decrypt from within
+programs, for example, from within 
+clisndrcv_host_pid_port_pubkey.c (the the client in the green box)
+and sersndrcv_host_pid_port_pubkey.c (prog in the yellow box)
+that task is pending.
+
+
+- attprog_pubkey.pem is the public key that prog sent included in
+  its contact details sent to this client as a payload.
+- prikey.pem is prog's private key. It is running in the attestable.
+
+4.1) Here is a poem in plain text. 
+bash-3.2$ cat poem.txt
+          Me gustas cuando callas porque puedo descansar!
+
+4.2) encypt the poem with the pub key.
+bash-3.2$ openssl pkeyutl -encrypt -inkey attprog_pubkey.pem -pubin 
+          -in poem.txt -out poem.enc
+
+4.3) Poem is encrypted
+bash-3.2$ more poem.enc
+"poem.enc" may be a binary file.  See it anyway? 
+
+4.4) Use the corresponding prog's private key to decrypt 
+bash-3.2$ openssl pkeyutl -decrypt -inkey prikey.pem -passin pass:simonpere  
+          -in poem.enc > poem_dec.txt
+
+4.5) The decrypted text matches the original
+bash-3.2$ cat poem_dec.txt
+ Me gustas cuando callas porque puedo descansar!
+
+

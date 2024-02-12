@@ -171,7 +171,7 @@ and pubKeyD.
 
 # Implementation
 We will refer to the last figure to explain the technology
-used for the implementation of the differen pieces of code. 
+used for the implementation of the different pieces of code. 
 
 1. The current implementation of the attestable launcher (blue box)
    has been coded and tested in Python3 (3.7.4 v3.7.4:e09359112e, 
@@ -197,34 +197,56 @@ used for the implementation of the differen pieces of code.
  
 
 # Testing: compilation and execution steps
+We elaborate the discuss each piece of code mentioned in the previos section,
+The information provided in this section complements (sometimes repeats) the 
+comments included  in the first lines of each file. It also provides links
+to documents with actual executions and collected outputs. 
+</br>
+It is worth clarifying that I collected the outputs from different
+runs, therefore the dynamic outputs (prog's listening port number and
+public key in particular) might not match in all the documents.
+
+ 
+ 
 
 ## The attestable launcher (attestablelauncher.py)
-This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
-attestable launcher. 
-
-The headings of each file includes the instructions to
-compile and execute the attestable launcher and
-indicate the platform, Python version and operating
-systems where the code has been tested.
-
-The headings also document the cryptographic libraries, operations 
-and files (public and private keys and certificates) involved. 
-We refer to the last figure to explain the pieces of
-code that compose the implementation. 
+The attestable launcher is represented by the blue boxes in the figures.
+The [attestable launcher demo steps](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/attlauncher_demo_steps.txt "technical demo") document shows how to 
+compile and run the attestable launcher. 
 
 
 ## The application requesting an attestable (cliRqExecProgInAttestable.py)
-This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
-attestable launcher. 
+The attestable launcher is represented by the blue box in the figures.
+This [application demo steps](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/application_demo_steps.txt "technical demo") document shows the steps to run the application. 
 
 
 
-## The launched program (sersndrcv_host_pid_port_pubkey.c)
-
+## The launched program (sersndrcv_host_pid_port_pubkey.c).
+This component is represented by the yellow boxes in 
+the figures. Any piece of executable code can be used. I have experimented with
+the C programs included in the repo __hello.c__, __hellopidhostename.c__
+clisocketsendrecvPort80.c and __sersndrcv_host_pid_port_pubkey.c__.
 
 
 ## The application interacting with prog (clisndrcv_host_pid_port_pubkey.c)
-$ cli 127.0.0.1 xxxxx
+This component is represented by the green box in the figures. Any piece of 
+executable code that is capable of sending TCP/IP connection request to
+the port retrieved from prog's contact details can be used. 
+ I have experimented with __clisndrcv_host_pid_port_pubkey.c__
+which sends a connection request against __sersndrcv_host_pid_port_pubkey.c__
+and receives a response. In the experiments, the interaction between
+_clisndrcv_host_pid_port_pubkey.c__ and __sersndrcv_host_pid_port_pubkey.c__
+is in plain text, yet, the public key of __sersndrcv_host_pid_port_pubkey.c__
+is available. I do not use it in this demo to save time.
+
+```
+bash-3.2$ cli 127.0.0.1 51365
+The serverhostname is : 127.0.0.1 60768
+Connected
+
+Reply received from server: 
+Hello Client , Ive received your connection. But I have to go now, bye
+```
 
 
 
