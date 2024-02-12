@@ -1,4 +1,4 @@
-# Generation of pri-pub key pair with openssl online tool
+# Generation of a private/public key pair with the openssl online tool
 This code shows a pragmatic approach to generate a pair of private-public keys.
 It uses the online openssl tool executed from a C program as follows:
 </br> 
@@ -6,24 +6,23 @@ It uses the online openssl tool executed from a C program as follows:
 1. Creates two child processes with __fork( )__
 1. Makes the child processes to execute __execl(openssl...)__  to  generate,
     respectively, the private and public key, and store them on disk
-    encoded in __pem__ format.
+    encoded in __pem__ format: prikey.pen and pubkey.pem, respectively.
 1. Opens the __pubkey.pem__ file to extract the public key,
      places it  in an array of chars (that is, a C string) and 
      displays it on the screen. If needed, such a string can be sent to
-     remote parties over communication channels like
-     TCP/IP sockets.
+     remote parties over communication channels like TCP/IP sockets.
 </br>
 
 
 
-Examples of key generation, encryption and decription with
+Examples of key generation, encryption and decryption with
 the openssl tool can be found in: 
 
 - [Encrypting and decrypting files with OpenSSL, Gaurav Kamathe](https://opensource.com/article/21/4/encryption-decryption-openssl).
 
 </br>
 
-The PEM (Privacy Enhanced Mail) is a encoding stardard for
+The PEM (Privacy Enhanced Mail) is a encoding standard for
 encoding binary data using only printable ASCII characters.
 Keys (and arbitrary binary data) encoded in PEM can be
 transmitted over communication channels. See for
@@ -56,11 +55,17 @@ applications willing to interact with the attestable.
      
  
 # Documentation 
-Additional documentation is included in the first lines of  __generate_pripubkey_withpass.c__ 
+The first lines of __generate_pripubkey_withpass.c__  provide technical details
+of the code.
 
-   
+
+# Demo of testing the private public keys
+ The [Step by step demo](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/pripubkey_generate_openssl_onlinepass_demo.txt "technical report") document 
+shows how to generate and test a pair of private/public key.
+ 
+ 
 ## Corresponding author  
-carlos.molina@cl.cam.ac.uk  
+carlos.molina@cl.cam.ac.uk     
 Computer Laboratory, University of Cambridge.
  
  
