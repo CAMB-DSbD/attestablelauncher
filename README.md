@@ -151,7 +151,7 @@ can launch an interactive program.
 </p>
 </br>
 Prog's pseudocode shows that progs dynamically creates
-a __pair of private/public keys__ and a __listening port__.
+a pair of private/public keys and a listening port.
 The public key and the port number are included in
 the contact details that prog sends to the attestable
 launcher. Observe that after sending its contact details,
@@ -163,8 +163,8 @@ can connect to and interact with prog. It is up to Alice
 to determine what applications are entitled to interact
 with prog.  The IDs of such applications can be encoded
 in prog, for example, prog can be programmed to accept
-connections only from the owner of public keys pubkey~C~
-and pubKey~D~.
+connections only from the owner of public keys pubkeyC
+and pubKeyD.
 
 
 
