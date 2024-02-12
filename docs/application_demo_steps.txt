@@ -51,7 +51,9 @@ I'm ('127.0.0.1', 51364)
 msgsize=  867
 
 payload: 
- attestable_details:<SEPARA>progname=./ser<SEPARA>hotsname=MacBook-Air-423.local<SEPARA>pid_num=6884<SEPARA>port_num=51365<SEPARA>pub_key=-----BEGIN PUBLIC KEY-----
+ attestable_details:<SEPARA>progname=./ser<SEPARA>hotsname=MacBook-
+Air-423.local<SEPARA>pid_num=6884<SEPARA>port_num=51365
+<SEPARA>pub_key=-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1cvqIBHkz4YBKmt15edF
 TlJrjTMR1sFmC42C28ftikFB4d7sZLq9P4lx9fIpJko+zKguMwcIS9lUVEwHjT1R
 YTUFGttgTvGgg/KYX+gsX0HTiMoXgdNwdevfzwR+Vu483Q3MGuZl02Grl46ZkEmx

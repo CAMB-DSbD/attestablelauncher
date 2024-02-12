@@ -224,19 +224,52 @@ This [application demo steps](https://github.com/CAMB-DSbD/attestablelauncher/bl
 ## The launched program (sersndrcv_host_pid_port_pubkey.c).
 This component is represented by the yellow boxes in 
 the figures. Any piece of executable code can be used. I have experimented with
-the C programs included in the repo __hello.c__, __hellopidhostename.c__
-clisocketsendrecvPort80.c and __sersndrcv_host_pid_port_pubkey.c__.
+the C programs included in the repo hello.c, hellopidhostename.c
+clisocketsendrecvPort80.c and sersndrcv_host_pid_port_pubkey.c
+</br>
+In the runs shown in this documents, I used sersndrcv_host_pid_port_pubkey.c
+beause it interactive and as such it dynamically generates a 
+port for listening and a pair of private/public keys.
+
+</br> The code for generating the private/public ker is explained
+in the comments of generate_pripubkey_func.c. I  brief I
+resorted to the use of fork() and execl() to execute 
+the online oppenssl tool:
+
+```
+1) The parent process forks to create a child that
+   executes execl(openssl ...) to create a private key.
+
+2) The parent process waits for the child to
+   to complete producing prikey.pem on disk.
+
+3) The parent process forks to create a child that
+   executes execl(openssl ...) to create a public key.
+
+4) The parent process waits for the child process
+   to complete producing pubkey.pem on disk. 
+
+5) The parent process continues its execution and
+   calls the function char *read_key_from_file(char *key_fname)
+   to read the public key from the generated pubkey.pem file,
+   places it in an array of chars (i.e, a string) and
+   returns. A NULL pointer is returned if the key cannot
+   be retrieved from the pubkey.pem file.
+
+```
+
+
 
 
 ## The application interacting with prog (clisndrcv_host_pid_port_pubkey.c)
 This component is represented by the green box in the figures. Any piece of 
 executable code that is capable of sending TCP/IP connection request to
 the port retrieved from prog's contact details can be used. 
- I have experimented with __clisndrcv_host_pid_port_pubkey.c__
-which sends a connection request against __sersndrcv_host_pid_port_pubkey.c__
+ I have experimented with clisndrcv_host_pid_port_pubkey.c
+which sends a connection request against sersndrcv_host_pid_port_pubkey.c
 and receives a response. In the experiments, the interaction between
-_clisndrcv_host_pid_port_pubkey.c__ and __sersndrcv_host_pid_port_pubkey.c__
-is in plain text, yet, the public key of __sersndrcv_host_pid_port_pubkey.c__
+clisndrcv_host_pid_port_pubkey.c and sersndrcv_host_pid_port_pubkey.c
+is in plain text, yet, the public key of sersndrcv_host_pid_port_pubkey.c
 is available. I do not use it in this demo to save time.
 
 ```
