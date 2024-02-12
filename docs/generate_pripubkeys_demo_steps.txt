@@ -7,7 +7,7 @@
  *
  * generate_pripubkeys_demo_steps.txt 
  *         Explains how sersndrcv_host_pid_port_pubkey.c generates a
- *         pair of private/public keys.
+ *         pair of private/public keys using openssl online.
  *         
  *
  * Testing environment used:
