@@ -197,6 +197,8 @@ used for the implementation of the differen pieces of code.
  
 
 # Testing: compilation and execution steps
+
+## The attestable launcher (attestablelauncher.py)
 This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
 attestable launcher. 
 
@@ -208,7 +210,21 @@ systems where the code has been tested.
 The headings also document the cryptographic libraries, operations 
 and files (public and private keys and certificates) involved. 
 We refer to the last figure to explain the pieces of
-code that compose the implementation.
+code that compose the implementation. 
+
+
+## The application requesting an attestable (cliRqExecProgInAttestable.py)
+This [compilation and execution example](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/compile_and_exec_attlauncher_demo_steps.txt "technical demo") document shows the steps to run the
+attestable launcher. 
+
+
+
+## The launched program (sersndrcv_host_pid_port_pubkey.c)
+
+
+
+## The application interacting with prog (clisndrcv_host_pid_port_pubkey.c)
+$ cli 127.0.0.1 xxxxx
 
 
 
