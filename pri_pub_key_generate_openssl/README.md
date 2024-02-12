@@ -1,4 +1,4 @@
-# Generation of a private/public key pair with the openssl online tool
+# Generation of a priv/pub key pair with the openssl online tool
 This code shows a pragmatic approach to generate a pair of private-public keys.
 It uses the online openssl tool executed from a C program as follows:
 </br> 
@@ -60,7 +60,7 @@ of the code.
 
 
 # Demo of testing the private public keys
- The [Step by step demo](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/pripubkey_generate_openssl_onlinepass_demo.txt "technical report") document 
+ The [Step by step demo](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/pripubkey_generate_openssl_onlinepass_demo.txt "technical report") document 
 shows how to generate and test a pair of private/public key.
  
  
