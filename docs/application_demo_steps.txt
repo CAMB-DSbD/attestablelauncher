@@ -115,7 +115,7 @@ that task is pending.
 
 4.1) Here is a poem in plain text. 
 bash-3.2$ cat poem.txt
-          Me gustas cuando callas porque puedo descansar!
+          Me gustas cuando callas porque estas como asusente.
 
 4.2) encypt the poem with the pub key.
 bash-3.2$ openssl pkeyutl -encrypt -inkey attprog_pubkey.pem -pubin 
@@ -131,6 +131,6 @@ bash-3.2$ openssl pkeyutl -decrypt -inkey prikey.pem -passin pass:simonpere
 
 4.5) The decrypted text matches the original
 bash-3.2$ cat poem_dec.txt
- Me gustas cuando callas porque puedo descansar!
+          Me gustas cuando callas porque estas como asusente.
 
 
