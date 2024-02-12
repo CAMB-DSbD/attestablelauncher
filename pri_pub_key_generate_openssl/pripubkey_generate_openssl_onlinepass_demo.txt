@@ -1,0 +1,148 @@
+ /*
+ * Programmer: Carlos Molina Jimenez
+ *             carlos.molina@cl.cam.ac.uk
+ *             Computer Lab, University of Cambridge
+ * 
+ * Date:  11 Feb 2024
+ *
+ * Doc:   pripubkey_generate_openssl_onlinepass_demo.txt
+ *
+ *        This document explain how I used the generate_pripubkey_withpass.c
+ *        program to generate a pair of private/public keys from the openssl
+ *        online tool.
+ *        It also shows how I tested the keys on:
+ *
+ *        MacBook Air: catalina macOS 10.15.7
+ *
+ *        bash-3.2$ openssl -version
+ *        OpenSSL 3.2.0 23 Nov 2023 (Library: OpenSSL 3.2.0 23 Nov 2023)
+ *              
+ * 
+ *        bash-3.2$ cc --version
+ *        Apple clang version 12.0.0 (clang-1200.0.32.29)
+ *        Target: x86_64-apple-darwin19.6.0
+ *        Thread model: posix
+ *
+ * Source: I took the ideas from
+ *         How to generate an openSSL key using a passphrase from the 
+ *         command line?
+ *
+ *      https://stackoverflow.com/questions/4294689/how-to-generate-an-
+ *       openssl-key-using-a-passphrase-from-the-command-line
+ *
+ * openssl genrsa -aes128 -passout pass:foobar -out privkey.pem 2048
+ * openssl rsa -in privkey.pem -passin pass:foobar -pubout -out privkey.pub
+ *
+ * See also See also
+ * Encrypting and decrypting files with OpenSSL
+ *
+ * https://opensource.com/article/21/4/encryption-decryption-openssl
+ */
+
+
+
+1) Functionality of generate_pripubkey_withpass.c
+==============================================
+
+This program uses fork, execl and openssl to create a pair 
+of private and public keys. 
+
+Particularity: The pass phrase is included in the command line
+ 
+a) The parent process forks to create a child that
+   executes execl(openssl ...) to create a private key.
+
+b) The parent process waits for the child to
+   to complete producing privkey.pem on disk.
+ 
+c) The parent process forks to create a child that
+   executes execl(openssl ...) to create a pub key.
+
+d) The parent process waits for the child process
+   to complete producing pubkey.pem on disk. 
+ 
+e) The parent process continues its execution and
+   calls the function char *read_key_from_file(char *key_fname)
+   to read the public key from the generated pubkey.pem file,
+   places it in an array of chars (i.e, a string) and
+   prints it out.
+   The public key can be sent over a communication channel
+   like a socket to a remote application.
+
+f) execl syntax
+   int execl(const char *path, const char *arg, ...);
+   https://stackoverflow.com/questions/19209141/how-do-i-execute-
+   a-shell-built-in-command-with-a-c-function
+
+
+
+2) Compilation:
+===============
+
+The compilation assumes that readfiletostring_func.c
+in located in the current subdir 
+
+bash-3.2$ cc -o genpripubkey generate_pripubkey_withpass.c
+            
+         
+
+3) Execution:
+=============
+bash-3.2$ genpripubkey
+
+
+The execution creates two files in PEM format: one
+for the private key and another one for the public key.
+
+bash-3.2$ ls -l
+... 
+-rw-------  1 carlosmolina  staff  1886  8 Feb 02:48 prikey.pem
+-rw-r--r--  1 carlosmolina  staff   451  8 Feb 02:48 pubkey.pem
+...
+ 
+ 
+4) Key testing:
+===============
+
+I took the example from
+https://opensource.com/article/21/4/encryption-decryption-openssl
+
+
+
+4.1) I have a plain text file
+
+bash-3.2$ cat poem.txt
+Llegue a Comala porque ...
+
+
+ 
+4.2) I use pubkey.pem to encrypt the poem.txt file 
+bash-3.2$ openssl pkeyutl -encrypt -inkey pubkey.pem -pubin 
+          -in poem.txt -out poem.enc
+ 
+
+
+4.3) The result is an encrypted file
+
+bash-3.2$ cat poem.enc
+          "poem.enc" may be a binary file.  See it anyway? 
+ 
+bash-3.2$ wc -c < poem.enc
+          256
+
+
+
+4.4 I use prikey.pem to decrypt the encrypted file
+
+bash-3.2$ openssl pkeyutl -decrypt -inkey prikey.pem  
+          -passin pass:simonpere  -in poem.enc > poem_dec.txt
+
+
+
+4.5 The result is a plain text file whose content matches
+the original poem.txt file.
+
+bash-3.2$ cat poem_dec.txt
+Llegue a Comala porque ...
+
+ 
