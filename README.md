@@ -217,7 +217,7 @@ compile and run the attestable launcher.
 
 ## The application requesting an attestable (cliRqExecProgInAttestable.py)
 The attestable launcher is represented by the blue box in the figures.
-This [application demo steps](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/application_demo_steps.txt "technical demo") document shows the steps to run the application. 
+The [application demo steps](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/application_demo_steps.txt "technical demo") document shows the steps to run the application. 
 
 
 
@@ -232,32 +232,19 @@ beause it interactive and as such it dynamically generates a
 port for listening and a pair of private/public keys.
 
 </br> The code for generating the private/public ker is explained
-in the comments of generate_pripubkey_func.c. I  brief I
+in the comments of generate_pripubkey_func.c. In  brief, I
 resorted to the use of fork() and execl() to execute 
-the online oppenssl tool:
+the online oppenssl tool.
 
-```
-1) The parent process forks to create a child that
-   executes execl(openssl ...) to create a private key.
+The [generate_pripubkeys_demo_steps.txt](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/generate_pripubkeys_demo_steps.txt "technical demo") document 
+shows the pragmatic (not necessarily efficient or platform
+independent) strategy that I used. It is good enough to for
+proof of concepts.
 
-2) The parent process waits for the child to
-   to complete producing prikey.pem on disk.
-
-3) The parent process forks to create a child that
-   executes execl(openssl ...) to create a public key.
-
-4) The parent process waits for the child process
-   to complete producing pubkey.pem on disk. 
-
-5) The parent process continues its execution and
-   calls the function char *read_key_from_file(char *key_fname)
-   to read the public key from the generated pubkey.pem file,
-   places it in an array of chars (i.e, a string) and
-   returns. A NULL pointer is returned if the key cannot
-   be retrieved from the pubkey.pem file.
-
-```
-
+</br> 
+The program generate_pripubkey_func.c can generate
+pairs of pri/pub keys independently. It calls  
+generate_pripubkey_func.c
 
 
 

@@ -1,0 +1,45 @@
+/*
+ * Programmer: Carlos Molina Jimenez
+ *             carlos.molina@cl.cam.ac.uk
+ *             Computer Lab, University of Cambridge
+ * 
+ * Date:   12 Feb 2024
+ *
+ * generate_pripubkeys_demo_steps.txt 
+ *         Explains how sersndrcv_host_pid_port_pubkey.c generates a
+ *         pair of private/public keys.
+ *         
+ *
+ * Testing environment used:
+ *  macOS Catalina Version 10.15.7
+ *
+ *  bash-3.2$ python3
+ *  Python 3.7.4 (v3.7.4:e09359112e, Jul  8 2019, 14:36:03) 
+ */
+
+
+1) The parent process forks to create a child that
+   executes execl(openssl ...) to create a private key.
+
+2) The parent process waits for the child to
+   to complete producing prikey.pem on disk.
+
+3) The parent process forks to create a child that
+   executes execl(openssl ...) to create a public key.
+
+4) The parent process waits for the child process
+   to complete producing pubkey.pem on disk.   
+
+5) The parent process continues its execution and
+   calls the function char *read_key_from_file(char *key_fname)
+   to read the public key from the generated pubkey.pem file,
+   places it in an array of chars (i.e, a string) and
+   returns. A NULL pointer is returned if the key cannot
+   be retrieved from the pubkey.pem file.
+
+
+The program generate_pripubkey_func.c can generate
+pairs of pri/pub keys independently. It calls
+generate_pripubkey_func.c
+
+
