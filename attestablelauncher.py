@@ -2,7 +2,7 @@
 author          : Carlos Molina Jimenez
                 : carlos.molina@cl.cam.ac.uk
                 : Computer Lab, University of Cambridge
-date            : 5 Feb 2024 
+date            : 9 Feb 2024 
                 :
 title           : attestablelauncher.py 
                 :
@@ -13,11 +13,11 @@ description     : An attestable launcher that:
                 : 2) Collects the results which can be either
                 :    a) The results produced by the launched program
                 :       upon completion.
-                :    b) The contact details (hostname, pid, port number, etc.)
+                :    b) The contact details (hostname, pid, port number, and public key),
                 :       of the program, which can be used by remote clients to
                 :       interact with the launched program running in  the
                 :       attestable.
-                : 3) Sing the results under its private key.
+                : 3) Sign the results under its private key.
                 :
                 : Notice that the key is hardcoded and is 
                 : "bobServer.key.pem"
@@ -72,6 +72,7 @@ compile and run :
 # A concurrent TCP server 
 
 from sendReceiveOverSocket import mysend, myreceive, padmsgsize 
+from opers_onatt_output import replace_tabs_by_newlines
 from pathlib import Path
 from subprocess import Popen, PIPE 
 
@@ -136,8 +137,16 @@ class ClientHandler(threading.Thread):
      #mysubproc= Popen(["./hello"], stdout=PIPE, stderr=PIPE)
      mysubproc= Popen(["env", "LD_C18N_LIBRARY_PATH=.", prog], stdout=PIPE, stderr=PIPE)
 
-     output= mysubproc.stdout.readline()
-
+     
+     """
+     readline is able to read a single line, i.e, a string without newline
+     chars (\n). The string includes a public key in which newline chars have
+     been replaced by tabs (\t) at the source. replace_tabs_by newlines
+     restores the newline chars back to the public key.
+     """
+     output_rcv= mysubproc.stdout.readline() 
+     output= replace_tabs_by_newlines(output_rcv)
+ 
      err=   mysubproc.stderr 
 
      if len(output) > 0:

@@ -2,9 +2,9 @@
 author          : Carlos Molina Jimenez
                 : carlos.molina@cl.cam.ac.uk
                 : Computer Lab, University of Cambridge
-date            : 9 Feb 2024 
+date            : 5 Feb 2024 
                 :
-title           : cliRqExecProgInAttestable.py 
+title           : cliRqExecProgInAttestable_simple.py 
                 :
 description     : A client that that communicates with a server over
                 : a secure channel to request the execution of a program. 
@@ -27,7 +27,7 @@ description     : A client that that communicates with a server over
                 : them it places a request to connect.  
                 : The PEM pass phrse is "camb" and was set up at
                 : certification creation time. See
-                : RESOURECE_DIRECTORY. 
+                : RESOURCE_DIRECTORY. 
                 : If the connection is accepted this client sends two 
                 : msg to the server:
                 : 1) msg indicating the size of the next msg
@@ -73,10 +73,10 @@ usage           :
 notes           :
 compile and run : 
                 : a) In a different window execute
-                : $ python3 attestablelauncher.py
+                : $ python3 attestablelauncher_simple.py
                 :
                 : b)
-                : $ python3 cliRqExecProgInAttestable.py 
+                : $ python3 cliRqExecProgInAttestable_simple.py 
                 : Alice's client running. My PEM pass phrase is camb 
                 :
                 : Enter PEM pass phrase:
@@ -98,49 +98,18 @@ compile and run :
                 :
                 :  signature on message payload verified successfully...
                 :
-                : b.1) The execution creates (in current subdir) the file 
-                : attprog_pubkey.pem that contains the public key of the launched 
-                : program (I called it prog, in this example) still running in the 
-                : attestable.
-                : I tested the public key: 
-                : - attprog_pubkey.pem is the public key that prog sent included in
-                :   its contact details sent to this client as a payload.
-                : - prikey.pem is the private key of prog running in the attestable.
-                :
-                : 1) Here is a poem in plain text. 
-                : bash-3.2$ cat poem.txt
-                : Me gustas cuando callas porque puedo descansar!
-                :
-                : 2) encypt the poem with the pub key.
-                : bash-3.2$ openssl pkeyutl -encrypt -inkey attprog_pubkey.pem -pubin 
-                :           -in poem.txt -out poem.enc
-                :
-                : 3) Poem is encrypted
-                : bash-3.2$ more poem.enc
-                : "poem.enc" may be a binary file.  See it anyway? 
-                :  
-                : 4) Use the corresponding prog's private key to decrypt 
-                : bash-3.2$ openssl pkeyutl -decrypt -inkey prikey.pem -passin pass:simonpere  
-                :           -in poem.enc > poem_dec.txt
-                :
-                : 5) The decrypted text matches the original
-                : bash-3.2$ cat poem_dec.txt
-                : Me gustas cuando callas porque puedo descansar!
-                :
-                :
                 : c) In this example, the program that this client requested to
                 :    be executed is a server (ser) which is still running within
                 :    an attestable and has returned its contact
                 :    details to be contacted by remote clients. For
                 :    example by 
-                :    % cc -o cli clisndrcv_host_pid_port_pubkey.c 
+                :    % cc -o cli clisocksndrcv_ser_port_assigned_argv.c
                 :    % cli 127.0.0.1 60469
                 :
 """
 
 
 from sendReceiveOverSocket import mysend, myreceive, padmsgsize 
-from opers_onatt_output import save_pubkey_ondisk
 from  verifysignatureonpayload import Verifysignatureonpayload 
 from  certverify import Certverify
 
@@ -232,12 +201,4 @@ verifysig= Verifysignatureonpayload()
 pub_key= verifysig.pub_key()
 
 verifysig.verify_msgpayload(pub_key, payload.decode(), sig)
-
-
-"""
-Retrieve pub_key from payload and store it a pem file in current subdir
-"""
-save_pubkey_ondisk("attprog_pubkey.pem", payload)
-print("\npub_key is on attprog_pubkey.pem")
-
 
