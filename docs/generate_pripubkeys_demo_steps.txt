@@ -15,6 +15,15 @@
  *
  *  bash-3.2$ python3
  *  Python 3.7.4 (v3.7.4:e09359112e, Jul  8 2019, 14:36:03) 
+ *
+ * bash-3.2$ cc --version
+ * Apple clang version 12.0.0 (clang-1200.0.32.29)
+ * Target: x86_64-apple-darwin19.6.0
+ * Thread model: posix
+ *
+ * bash-3.2$ openssl --version
+ * OpenSSL 3.2.0 23 Nov 2023 (Library: OpenSSL 3.2.0 23 Nov 2023)
+ *
  */
 
 
