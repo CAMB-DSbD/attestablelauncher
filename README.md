@@ -1,13 +1,13 @@
 # Attestable Launcher
 This page discusses the architecture and implementation
-of an attestable launcher that is capable of launching
-programs to execute in attestable instantiated on
-Morello Boards.
+of the attestable launcher, a program that, upon request,
+ is capable of launching programs to execute in attestables 
+ created on Morello Boards.
 
 
 # The attestablelauncher and program execution
 An attestable is an execution environment that offers the
-following two properties:
+following three properties:
 
 1. It is a black box that can be loaded with a piece of
    executable code. 
@@ -16,9 +16,9 @@ following two properties:
 1. The running code cannot be changed.
 
 In this document, we use __prog__ to refer to the program launched 
-into execution. We make no assumptions about ist particularities;
-for example, it can be a simple program that adds two integer
-or a server thats listen at a port for further interactions.  
+into execution by the attestable launcher. We make no assumptions about 
+its particularities: for example, it can be a simple program that adds two 
+integers or a server thats listen at a port for further interactions.  
 
 
 </br>
@@ -33,13 +33,16 @@ program that manages the attestable for the benefit of
 the clients  that request them  to execute programs that
 involve sensitive data.
 
-Attestable management includes several operation that
-the attestable provider (for example, a cloud provider)
-has the privilage and responsibility to execute such as
-attestable creation, loading it with a program, 
+Attestable management includes several operations that
+the attestablelauncher (for example, a cloud provider)
+has the privilage and responsibility to execute on behalf 
+of the attestable provider. The attestable provider can be
+for instance, a cloud provider who has deployed Morello Boards
+in his cloud infrastructure and rent attestable to clients.
+The list of operations includes attestable creation, loading it with a program, 
 launching the program into execution, the program's collection of
 execution results or the program's contact details,
-and wipe memory used.
+and memory wipe.
 
 
 # The attestablelauncher's architecture
@@ -60,10 +63,10 @@ code (prog<sub>1</sub>, prog<sub>2</sub> and prog<sub>3</sub>) as requested
 by applications (app<sub>1</sub>, app<sub>2</sub> and app<sub>3</sub>).
 </br>
 The attestable launcher responds with a document signed by 
-Bob's attestable launcher. The content of that document always
-include parameters that describe the configutation of the
-attestable such as the name of the launched program, the IP 
-hostname of the Morello Board, the PID of the created process
+Bob's attestable launcher. The document's content always
+includes parameters that describe the configutation of the
+attestable such as the name of the launched program, the IP address 
+and hostname of the Morello Board, the PID of the created process
 and the result of the launch. We elaborate on the results 
 in subsequent sections.
 </br>
@@ -75,9 +78,9 @@ The attestation document that Bob's attestable launcher
 returns is in essence a certificate of the attestable signed by
 Bob's attestable launcher. The latter acts as a trustworthy party.
 </br>
-Though not explicitly shown in the figure, BoB can be
+Though not explicitly shown in the figure, Bob can be
 a cloud provider that has deployed Morello Boards in his
-infrastructure to rent as a cloud service. Potential clients
+infrastructure to rent as a cloud services. Potential clients
 are owners of application that at some point need exfiltration
 resistant execution environments.
 </br>
@@ -90,11 +93,14 @@ The following figure illustrates the attestation steps.
 </p>
 </br>
 
+We  do not elaborate on the attestation because it is
+discussed thoroughly in [Cloud Provider's Based Attestation](https://github.com/CAMB-DSbD/attestablelauncher/blob/main/docs/CloudProvidersBasedAttestation_carlosmolina.pdf "technical report"). 
+
 
 
 
 # Attestablelauncher deployment
-In the current implementation Bob's attestable launcher and
+In the current implementation, Bob's attestable launcher and
 the attestables (att<sub>1</sub>, att<sub>2</sub> and att<sub>3</sub>) that the
 applications (app<sub>1</sub>, app<sub>2</sub> and app<sub>3</sub>) have
 requested, respectively, are collocated in the same Morello Board.
@@ -114,57 +120,77 @@ are either:
 
 1. **Interactive:** upon launching, the program executes, gathers
    its contact details, sends contact details to the attestable 
-   launcher and waits listening at a port for further interactions.
+   launcher and waits listening at a port for connection requests
+   from applications for further interactions.
 
 
 ## Launching of a non-interactive program
 The following figure illustrates how the attestable launcher
-can launch a non-interactive program 
+can launch a non-interactive program; in this example, __prog__ (running
+within the yellow box) is responsible for adding two integers.
+The yello box is in essence a memory region allocated within the
+atttestable box (__att__).
 
 <p align="center">
   <img src="./figures/ProgSends_att_result.png"
    width="700" title="Launching of a non-interactive program.">
 </p>
 </br>
-
+Prog's pseudocode shows that progs exits after sending __att_results___
+which include the result of the addition.
 
 
 
 ## Launching of an interactive program
 The following figure illustrates how the attestable launcher
-can launch an interactive program 
+can launch an interactive program. 
 
 <p align="center">
   <img src="./figures/ProgSends_att_contact_details.png"
    width="700" title="Launching of an interactive program.">
 </p>
 </br>
+Prog's pseudocode shows that progs dynamically creates
+a __pair of private/public keys__ and a __listening port__.
+The public key and the port number are included in
+the contact details that prog sends to the attestable
+launcher. Observe that after sending its contact details,
+prog blocks listening for connections at the port.
+
+In the figure, the client in the green box is an 
+application that after receiving prog's contact details
+can connect to and interact with prog. It is up to Alice
+to determine what applications are entitled to interact
+with prog.  The IDs of such applications can be encoded
+in prog, for example, prog can be programmed to accept
+connections only from the owner of public keys pubkey~C~
+and pubKey~D~.
 
 
 
 
 # Implementation
 We will refer to the last figure to explain the technology
-used for the implementation of the pieces of code that 
-compose the implementation.
+used for the implementation of the differen pieces of code. 
 
 1. The current implementation of the attestable launcher (blue box)
    has been coded and tested in Python3 (3.7.4 v3.7.4:e09359112e, 
    Jul 8 2019). 
 1. The application (orange box) that contacts the attestable launcher with
-   a request to launch __prog__ in an attestable has been implemented
-   in C.
-1. The program __prog__ (yellow box) launched into execution has 
+   a request to launch __prog__ has been implemented
+   in Python3.
+1. The program __prog__ (yellow box) launched into execution has been
    coded in C. 
-1. The actual attestable (pink box) is created in C using the library 
+1. The actual attestable (pink box) has been coded in C using the library 
    compartmentalization facilities available from cheriBSD ver 
    22.12. 
    </br>
-   However, observe that in this demo, the attestable IS NOT
-   created in the actual Morello Board. That part of the
+   However, observe that in this demo, the attestable DOES NOT
+   running in the actual Morello Board. That part of the
    demo is pending. 
 1. The client (green box) that interacts with __prog__ has been implemented 
-   in C.
+   in C and is a conventional client that request a connection at
+   the port number retrieved from prog's contact details.
 </br>
 
 
