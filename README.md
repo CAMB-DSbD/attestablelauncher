@@ -1,4 +1,4 @@
-# Attestable Launcher
+# Attestable launcher
 This page discusses the architecture and implementation
 of the attestable launcher, a program that, upon request,
 is capable of launching an attestable on a morello board,
