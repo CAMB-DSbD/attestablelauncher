@@ -1,8 +1,9 @@
 # Attestable Launcher
 This page discusses the architecture and implementation
 of the attestable launcher, a program that, upon request,
- is capable of launching programs to execute in attestables 
- created on Morello Boards.
+is capable of launching an attestable on a morello board,
+loading it with a piece of executable code, launching
+the code into execution and collecting the results.
 
 
 # The attestablelauncher and program execution
@@ -22,10 +23,10 @@ integers or a server thats listen at a port for further interactions.
 
 
 </br>
-There are several technologies that can be used for creating attestables,
-loading them with programs and launching them into execution. This
-page describes the implementation of attestables created on 
-Morello Boards. Other technologies that can be used for creating
+There are several technologies that can be used for implementing
+attestables.  This
+page describes the implementation of attestables implemented on 
+Morello Boards. Other technologies that can be used for implementing 
 attestables are Intel SGX, ARM TrustZone and Amazon Nitre.
 
 We use the term __attestable launcher__ to refer to the
@@ -39,10 +40,10 @@ has the privilage and responsibility to execute on behalf
 of the attestable provider. The attestable provider can be
 for instance, a cloud provider who has deployed Morello Boards
 in his cloud infrastructure and rent attestable to clients.
-The list of operations includes attestable creation, loading it with a program, 
-launching the program into execution, the program's collection of
-execution results or the program's contact details,
-and memory wipe.
+The list of operations includes the launching of the 
+attestable, loading it with an executable program, 
+launching the program into execution, collection of 
+the program's result and  memory wipe.
 
 
 # The attestablelauncher's architecture
