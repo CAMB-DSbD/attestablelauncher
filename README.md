@@ -133,7 +133,7 @@ The yello box is in essence a memory region allocated within the
 atttestable box (__att__).
 
 <p align="center">
-  <img src="./figures/ProgSends_att_result.png"
+  <img src="./figures/execnoninteractiveprog.png"
    width="700" title="Launching of a non-interactive program.">
 </p>
 </br>
@@ -147,7 +147,7 @@ The following figure illustrates how the attestable launcher
 can launch an interactive program. 
 
 <p align="center">
-  <img src="./figures/ProgSends_att_contact_details.png"
+  <img src="./figures/execinteractiveprog.png"
    width="700" title="Launching of an interactive program.">
 </p>
 </br>
