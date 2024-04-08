@@ -56,6 +56,7 @@ as Multiparty Secure Private Computation as a service
  novelty is that their relevance to the economy has now caught the attention 
  of governments.
  See [Steps Toward a Shared Infrastructure for Multi-Party Secure Private Computing in Official Statistics](https://doi.org/10.1177/0282423X241235259 "Fabio Ricciato") and 
+ 
 [From privacy to partnership: The role of privacy enhancing technologies in data governance and collaborative analysis](https://royalsociety.org/-/media/policy/projects/privacy-enhancing-technologies/From-Privacy-to-Partnership.pdf "The Royal Society") 
 
 # The attestablelauncher's architecture
