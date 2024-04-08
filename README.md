@@ -48,7 +48,7 @@ launching the program into execution, collection of
 the program's result and  memory wipe.  
 
 </br>
-The attestable can be regarded as a hardware realisation of a PET (Privacy
+In our deployment, the attestable can be regarded as a hardware realisation of a PET (Privacy
 Enhancing Technology)  that a cloud provider offers
 as Multiparty Secure Private Computation as a service 
 (MPSPC-as-a-service).
@@ -56,7 +56,7 @@ as Multiparty Secure Private Computation as a service
  novelty is that their relevance to the economy has now caught the attention 
  of governments. See 
  
- - [Steps Toward a Shared Infrastructure for Multi-Party Secure Private Computing in Official Statistics](https://doi.org/10.1177/0282423X241235259 "Fabio Ricciato") and 
+ - [Steps Toward a Shared Infrastructure for Multi-Party Secure Private Computing in Official Statistics](https://doi.org/10.1177/0282423X241235259 "Fabio Ricciato")
  
 - [From privacy to partnership: The role of privacy enhancing technologies in data governance and collaborative analysis](https://royalsociety.org/-/media/policy/projects/privacy-enhancing-technologies/From-Privacy-to-Partnership.pdf "The Royal Society") 
 
