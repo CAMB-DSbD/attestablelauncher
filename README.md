@@ -45,13 +45,17 @@ in his cloud infrastructure and rent attestable to clients.
 The list of operations includes the launching of the 
 attestable, loading it with an executable program, 
 launching the program into execution, collection of 
-the program's result and  memory wipe.  The attestable
-can be regarded as a hardware realisation of a PET (Privacy
+the program's result and  memory wipe.  
+
+</br>
+The attestable can be regarded as a hardware realisation of a PET (Privacy
 Enhancing Technology)  that a cloud provider offers
 as Multiparty Secure Private Computation as a service 
-(MPSPC-as-a-service)
-See
-[Steps Toward a Shared Infrastructure for Multi-Party Secure Private Computing in Official Statistics]( https://doi.org/10.1177/0282423X241235259 "journal andticle") and 
+(MPSPC-as-a-service).
+ PETs technologies have been the subject of research for decades. The
+ novelty is that their relevance to the economy has now caught the attention 
+ of governments.
+ See [Steps Toward a Shared Infrastructure for Multi-Party Secure Private Computing in Official Statistics]( https://doi.org/10.1177/0282423X241235259 "journal andticle") and 
 [From privacy to partnership: The role of privacy enhancing
            technologies in data governance and collaborative analysis]( https://royalsociety.org/-/media/policy/projects/privacy-enhancing-technologies/From-Privacy-to-Partnership.pdf "report") 
 
