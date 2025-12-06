@@ -11,7 +11,7 @@ An attestable is an execution environment that offers the
 following three properties:
 
 1. It is a black box that can be loaded with a piece of
-   executable code. 
+   executable code and data. 
 1. It prevents the observation of its data and idevelopment of 
    its computation.
 1. The running code cannot be changed.
